@@ -69,7 +69,7 @@ router.put("/id", auth, (req, res) => {
   res.json(user);
 });
 
-router.delete("/:id", auth, (req, res) => {
+router.delete("/:id", (req, res) => {
   const user = Users.getUserById(+req.params.id);
   if (!user) {
     return res.status(404).json({ message: "User not found!" });

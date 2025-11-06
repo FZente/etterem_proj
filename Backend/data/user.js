@@ -27,11 +27,3 @@ export const updateUser = (id, name, email, password) =>
     .run(name, email, password, id);
 export const deleteUser = (id) =>
   db.prepare("DELETE FROM users WHERE id = ?").run(id);
-
-const users = getAllUsers();
-if (!users.length) {
-  saveUser("Sanyi", "sanyi@gmail.com");
-  saveUser("Anna", "anna@gmail.com");
-  saveUser("Réka", "reka@gmail.com");
-  saveUser("Béla", "bela@gmail.com");
-}
