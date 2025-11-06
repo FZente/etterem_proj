@@ -11,16 +11,19 @@ db.prepare(
     )`
 ).run();
 
-export const GetAllRestaurants = () =>
+export const getAllRestaurants = () =>
   db.prepare("SELECT * FROM restaurants").all();
 
-export const GetRestaurantById = (id) =>
+export const getRestaurantById = (id) =>
   db.prepare("SELECT * FROM restaurants WHERE id = ?").get(id);
+
+export const getRestaurantByName = (name) =>
+  db.prepare("SELECT * FROM restaurants WHERE name = ?").get(name);
 
 export const saveRestaurant = (name, description, location, average_rating) =>
   db
     .prepare(
-      "INSERT INTO restaurant (name, description, location, average_rating) VALUES (?, ?, ?, ?)"
+      "INSERT INTO restaurants (name, description, location, average_rating) VALUES (?, ?, ?, ?)"
     )
     .run(name, description, location, average_rating);
 
@@ -33,9 +36,9 @@ export const updateRestaurant = (
 ) =>
   db
     .prepare(
-      "UPDATE restaurant SET name = ?, description = ?, location = ?, average_rating = ? WHERE id = ?"
+      "UPDATE restaurants SET name = ?, description = ?, location = ?, average_rating = ? WHERE id = ?"
     )
     .run(name, description, location, average_rating, id);
 
 export const deleteRestaurant = (id) =>
-  db.prepare("DELETE FROM restaurant WHERE id = ?").run();
+  db.prepare("DELETE FROM restaurants WHERE id = ?").run(id);
