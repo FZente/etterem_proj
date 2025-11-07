@@ -15,7 +15,7 @@ function Register() {
     };
 
     apiClient
-      .post(`/users`, u)
+      .post(`/users/register`, u)
       .then((response) => alert(response.status))
       .catch((result) => console.error(alert(result)));
   };
@@ -45,7 +45,7 @@ function Register() {
         }}
       />
       <br />
-      <button onClick={onSubmit}>Regisztráció</button>
+      <button onClick={onSubmit}>Registration</button>
     </>
   );
 }
