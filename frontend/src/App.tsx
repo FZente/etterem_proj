@@ -15,12 +15,12 @@ function App() {
 
   return (
     <>
-      {restaurants.map((r) => {
+      {restaurants.map((r) => (
         <div>
-          <h1>{r.name}</h1>
-          <p>{r.description}</p>
-        </div>;
-      })}
+          <h1>{r?.name}</h1>
+          <p>{r?.description}</p>
+        </div>
+      ))}
     </>
   );
 }
