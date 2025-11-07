@@ -42,3 +42,29 @@ export const updateRestaurant = (
 
 export const deleteRestaurant = (id) =>
   db.prepare("DELETE FROM restaurants WHERE id = ?").run(id);
+
+//Alapértelmezett éttermek feltöltése
+const count = db
+  .prepare("SELECT COUNT(*) AS count FROM restaurants")
+  .get().count;
+
+if (count === 0) {
+
+  const insert = db.prepare(`
+    INSERT INTO restaurants (name, description, location, average_rating)
+    VALUES (?, ?, ?, ?)
+  `);
+
+  const defaultRestaurants = [
+    ["La Bella Vita", "Olasz étterem kézműves pizzákkal", "Budapest", 4.7],
+    ["Sushi World", "Friss sushi és ázsiai ízek", "Debrecen", 4.5],
+    ["Steak House", "Prémium marhahús és borválogatás", "Szeged", 4.8],
+    ["Veggie Garden", "Vegán ételek természetesen", "Pécs", 4.6],
+  ];
+
+  const insertMany = db.transaction((restaurants) => {
+    for (const r of restaurants) insert.run(...r);
+  });
+
+  insertMany(defaultRestaurants);
+}

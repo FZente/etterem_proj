@@ -10,7 +10,7 @@ db.prepare(
     comment TEXT,
     created_at DATE,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id)
     )`
 ).run();
 
@@ -27,3 +27,31 @@ export const updateReview = (id, rating, comment) =>
     .run(rating, comment, id);
 export const deleteReview = (id) =>
   db.prepare("DELETE FROM reviews WHERE id = ?").run(id);
+
+const count = db.prepare("SELECT COUNT(*) AS count FROM reviews").get().count;
+
+if (count === 0) {
+  const insert = db.prepare(`
+    INSERT INTO reviews (user_id, restaurant_id, rating, comment, created_at)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+
+  const defaultReviews = [
+    [1, 1, 3, "Elment", new Date().toISOString()],
+    [1, 4, 4, "Jó volt!", new Date().toISOString()],
+    [2, 2, 1, "Szar volt volt!", new Date().toISOString()],
+    [
+      3,
+      2,
+      5,
+      "Szuper volt! Visszatérek mindenképpen!",
+      new Date().toISOString(),
+    ],
+  ];
+
+  const insertMany = db.transaction((reviews) => {
+    for (const r of reviews) insert.run(...r);
+  });
+
+  insertMany(defaultReviews);
+}
