@@ -40,13 +40,7 @@ if (count === 0) {
     [1, 1, 3, "Elment", new Date().toISOString()],
     [1, 4, 4, "Jó volt!", new Date().toISOString()],
     [2, 2, 1, "Szar volt volt!", new Date().toISOString()],
-    [
-      3,
-      2,
-      5,
-      "Szuper volt! Visszatérek mindenképpen!",
-      new Date().toISOString(),
-    ],
+    [3, 2, 5, "Szuper volt! Visszatérek biztosan!", new Date().toISOString()],
   ];
 
   const insertMany = db.transaction((reviews) => {
