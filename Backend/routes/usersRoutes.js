@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   res.json(users);
 });
 
-router.get("/:id", auth, (req, res) => {
+router.get("/:id", (req, res) => {
   const user = Users.getUserById(+req.params.id);
   if (!user) {
     return res.status(404).json({ message: "User not found!" });
