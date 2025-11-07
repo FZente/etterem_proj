@@ -48,10 +48,28 @@ router.post("/login", (req, res) => {
   res.json(token);
 });
 
-router.put("/id", auth, (req, res) => {
-  let user = Users.getUserById(+req.params.id);
+router.put("/:id", auth, (req, res) => {
+  const id = +req.params.id;
+  let user = Users.getUserById(id);
   if (!user) {
-    return res.status(400).json({ message: "Missing required data!" });
+    return res.status(404).json({ message: "User not found" });
+  }
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: "Missing required data" });
+  }
+  const salt = bcrypt.genSaltSync();
+  const hashedPassword = bcrypt.hashSync(password, salt);
+  Users.updateUser(id, name, email, hashedPassword);
+  user = Users.getUserById(id);
+  res.json(user);
+});
+
+router.patch("/:id", auth, (req, res) => {
+  const id = +req.params.id;
+  let user = Users.getUserById(id);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
   }
   const { name, email, password } = req.body;
   let hashedPassword;

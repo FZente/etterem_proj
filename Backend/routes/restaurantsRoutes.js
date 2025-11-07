@@ -32,8 +32,38 @@ router.post("/", (req, res) => {
   res.json(rest);
 });
 
-router.put("/:id", (req, res) => {});
-router.patch("/:id", auth, (req, res) => {});
+router.put("/:id", auth, (req, res) => {
+  const id = +req.params.id;
+  let rest = Restaurants.getRestaurantById(id);
+  if (!rest) {
+    return res.status(404).json({ message: "Restaurant not found" });
+  }
+  const { name, description, location, average_rating } = req.body;
+  if (!name || !description || !location || !average_rating) {
+    return res.status(400).json({ message: "Missing required data" });
+  }
+  Restaurants.updateRestaurant(id, name, description, location, average_rating);
+  rest = Restaurants.getRestaurantById(id);
+  res.json(rest);
+});
+
+router.patch("/:id", auth, (req, res) => {
+  const id = +req.params.id;
+  let rest = Restaurants.getRestaurantById(id);
+  if (!rest) {
+    return res.status(404).json({ message: "Restaurant not found" });
+  }
+  const { name, description, location, average_rating } = req.body;
+  Restaurants.updateRestaurant(
+    id,
+    name || rest.name,
+    description || rest.description,
+    location || rest.location,
+    average_rating || rest.average_rating
+  );
+  rest = Restaurants.getRestaurantById(id);
+  res.json(rest);
+});
 
 router.delete("/:id", (req, res) => {
   const id = +req.params.id;
