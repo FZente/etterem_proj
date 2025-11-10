@@ -19,8 +19,8 @@ export const getReviewsById = (id) =>
   db.prepare("SELECT * FROM reviews").get(id);
 export const saveReview = (rating, comment) =>
   db
-    .prepare("INSERT INTO reviews (rating, comment) VALUES (?,?)")
-    .run(rating, comment);
+    .prepare("INSERT INTO reviews (rating, comment, created_at) VALUES (?,?,?)")
+    .run(rating, comment, new Date().toISOString());
 export const updateReview = (id, rating, comment) =>
   db
     .prepare("UPDATE reviews SET rating = ?, comment = ? WHERE id = ?")
