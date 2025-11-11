@@ -1,11 +1,13 @@
 import { useState } from "react";
 import type { User } from "../type/User";
 import apiClient from "../api/apiClient";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const onSubmit = () => {
     const u: User = {
@@ -46,6 +48,11 @@ function Register() {
       />
       <br />
       <button onClick={onSubmit}>Registration</button>
+
+      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "40px" }}>
+        <p>If you have a registered profil: </p>
+        <button onClick={() => navigate("/login")}>Login</button>
+      </div>
     </>
   );
 }

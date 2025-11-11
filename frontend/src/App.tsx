@@ -7,9 +7,12 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import Grid from '@mui/material/Grid';
+import { useNavigate, useParams } from "react-router-dom";
 
 function App() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const navigate = useNavigate();
+  const {id} = useParams();
 
   useEffect(() => {
     apiClient
@@ -20,40 +23,31 @@ function App() {
 
   return (
     <>
-    <button className="top-right-buttons">Login</button>
-    <button className="top-right-buttons">Registration</button>
-      <Grid
-        container
-        spacing={3}               
-        justifyContent="center"   
-        sx={{ padding: 2 }}       
-      >
-        {restaurants.map((r) => (
-          <Grid
-            item
-            key={r.id}
-            xs={12}   
-            sm={6}    
-            md={4}    
-          >
-            <Card sx={{ maxWidth: 345, margin: "auto" }}>
-              <CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {r?.name}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {r?.description}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {r?.average_rating}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+    <div className="top-right-buttons">
+      <button onClick={() => navigate("/login")}>Login</button>
+      <button onClick={() => navigate("/register")}>Registration</button>
+    </div>
+      <Grid container spacing={3} justifyContent="center" sx={{ padding: 2 }}>
+  {restaurants.map((r) => (
+    <Grid key={r.id} size={{ xs: 12, sm: 6, md: 4 }}>
+      <Card sx={{ maxWidth: 345, margin: "auto" }}>
+        <CardActionArea onClick={() => navigate(`/restaurant/${Number(id)}`)}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {r?.name}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {r?.description}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {r?.average_rating}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Grid>
+  ))}
+</Grid>
     </>
   );
 }
