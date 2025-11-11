@@ -4,14 +4,14 @@ import apiClient from "../api/apiClient";
 import { useParams } from "react-router-dom";
 
 function RestaurantPage() {
-    const {id} = useParams();
+  const {id} = useParams();
   const [restaurant, setRestaurant] = useState<Restaurant>();
 
   useEffect(() => {
     apiClient
-      .get(`/restaurants/${Number(id)}`)
+      .get(`/restaurants/${id}`)
       .then((response) => setRestaurant(response.data))
-      .catch((result) => console.error(alert(result)));
+      .catch((result) => console.error(result));
   }, [id]);
 
   return <>
