@@ -8,11 +8,13 @@ function RestaurantPage() {
   const [restaurant, setRestaurant] = useState<Restaurant>();
 
   useEffect(() => {
+    if (!id) return;
+    console.log(id)
     apiClient
       .get(`/restaurants/${id}`)
       .then((response) => setRestaurant(response.data))
       .catch((result) => console.error(result));
-  }, [id]);
+  }, []);
 
   return <>
     <h1>Egy restaurant</h1>

@@ -7,12 +7,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import Grid from '@mui/material/Grid';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const navigate = useNavigate();
-  const {id} = useParams();
 
   useEffect(() => {
     apiClient
@@ -31,10 +30,10 @@ function App() {
   {restaurants.map((r) => (
     <Grid key={r.id} size={{ xs: 12, sm: 6, md: 4 }}>
       <Card sx={{ maxWidth: 345, margin: "auto" }}>
-        <CardActionArea onClick={() => navigate(`/restaurant/${Number(id)}`)}>
+        <CardActionArea onClick={() => navigate(`/restaurant/${r?.id}`)}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {r?.name}
+              {r?.name}{r?.id}
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {r?.description}
