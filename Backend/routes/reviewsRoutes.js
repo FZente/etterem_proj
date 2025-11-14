@@ -16,6 +16,12 @@ router.get("/:id", (req, res) => {
   res.json(rev);
 });
 
+router.get("/restaurant/:id", (req, res) => {
+  const restaurantId = +req.params.id;
+  const reviews = Reviews.getReviewsByRestaurantId(restaurantId);
+  res.json(reviews);
+});
+
 router.post("/", (req, res) => {
   const { rating, comment } = req.body;
   if (!rating || !comment) {
