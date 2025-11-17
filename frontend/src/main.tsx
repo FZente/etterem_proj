@@ -9,6 +9,7 @@ import Profil from "./pages/Profil.tsx";
 import RestaurantPage from "./pages/RestaurantPage.tsx";
 import NewRestaurant from "./pages/NewRestaurant.tsx";
 import NewReview from "./pages/NewReview.tsx";
+import EditRestaurant from "./pages/EditRestaurant.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/restaurant/:id" element={<RestaurantPage />} />
         <Route path="/new-restaurant" element={<NewRestaurant />} />
         <Route path="/new-review" element={<NewReview />} />
+        <Route path="/edit-restaurant/:id" element={<EditRestaurant />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
