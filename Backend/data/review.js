@@ -16,7 +16,7 @@ db.prepare(
 
 export const getAllReviews = () => db.prepare("SELECT * FROM reviews").all();
 export const getReviewsById = (id) =>
-  db.prepare("SELECT * FROM reviews").get(id);
+  db.prepare("SELECT * FROM reviews WHERE id = ?").get(id);
 export const getReviewsByRestaurantId = (restaurant_id) =>
   db.prepare("SELECT * FROM reviews WHERE restaurant_id = ?").all(restaurant_id);
 export const saveReview = (rating, comment) =>
