@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
 import Grid from '@mui/material/Grid';
+
 
 function RestaurantPage() {
   const {id} = useParams();
@@ -23,34 +23,30 @@ function RestaurantPage() {
 
     apiClient
       .get(`/reviews/restaurant/${id}`)
-      .then((response) => setReviews(response.data))
+      .then(res => setReviews(res.data))
       .catch((result) => console.error(result));
-  }, []);
+  }, [id]);
 
-  return (<>
-    <h1>Egy restaurant</h1>
-    <h2>{restaurant?.name}</h2>
-    <h3> {restaurant?.description}</h3>
+  return (
+    <>
+      <h1>Restaurant</h1>
+      <h2>{restaurant?.name}</h2>
+      <h3>{restaurant?.description}</h3>
 
-        <Grid container spacing={3} justifyContent="center" sx={{ padding: 2 }}>
-      {reviews.map((r) => (
-        <Grid key={r.id} size={{ xs: 12, sm: 6, md: 4 }}>
-          <Card sx={{ maxWidth: 345, margin: "auto" }}>
-            <CardActionArea>
+      <Grid container columns={12} spacing={2} sx={{ mt: 2 }}>
+        {reviews.map((r) => (
+          <Grid key={r.id} size={{ xs: 12, sm: 6, md: 4 }}>
+            <Card>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {r?.rating}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  {r?.comment}
-                </Typography>
+                <Typography variant="h6">{r.rating}</Typography>
+                <Typography>{r.comment}</Typography>
               </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
-    </>)
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </>
+  );
 }
 
 export default RestaurantPage;

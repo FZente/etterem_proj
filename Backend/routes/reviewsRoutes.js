@@ -19,7 +19,7 @@ router.get("/:id", (req, res) => {
 router.get("/restaurant/:id", (req, res) => {
   const restaurantId = +req.params.id;
   const reviews = Reviews.getReviewsByRestaurantId(restaurantId);
-  res.json(reviews);
+  res.json(reviews || []);
 });
 
 router.post("/", (req, res) => {

@@ -33,7 +33,7 @@ function App() {
         <CardActionArea onClick={() => navigate(`/restaurant/${r?.id}`)}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {r?.name}{r?.id}
+              {r?.name}
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {r?.description}

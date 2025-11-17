@@ -18,7 +18,7 @@ export const getAllReviews = () => db.prepare("SELECT * FROM reviews").all();
 export const getReviewsById = (id) =>
   db.prepare("SELECT * FROM reviews").get(id);
 export const getReviewsByRestaurantId = (restaurant_id) =>
-  db.prepare("SELECT * FROM reviews").get(restaurant_id);
+  db.prepare("SELECT * FROM reviews WHERE restaurant_id = ?").all(restaurant_id);
 export const saveReview = (rating, comment) =>
   db
     .prepare("INSERT INTO reviews (rating, comment, created_at) VALUES (?,?,?)")
