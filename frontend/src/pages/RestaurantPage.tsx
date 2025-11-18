@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import type { Restaurant } from "../type/Restaurant";
 import type { Review } from "../type/Review";
 import apiClient from "../api/apiClient";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-
+import Avatar from "@mui/material/Avatar";
 
 function RestaurantPage() {
   const {id} = useParams();
   const [restaurant, setRestaurant] = useState<Restaurant>();
   const [reviews, setReviews] = useState<Review[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(id)
@@ -29,6 +30,9 @@ function RestaurantPage() {
 
   return (
     <>
+      <div className="fo-oldal-avatar">
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+      </div>
       <h1>Restaurant</h1>
       <h2>{restaurant?.name}</h2>
       <h3>{restaurant?.description}</h3>

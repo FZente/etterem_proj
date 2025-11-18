@@ -20,6 +20,9 @@ export const getRestaurantById = (id) =>
 export const getRestaurantByName = (name) =>
   db.prepare("SELECT * FROM restaurants WHERE name = ?").get(name);
 
+export const getRestaurantByLocation = (location) =>
+  db.prepare("SELECT * FROM restaurants WHERE location = ?").get(location);
+
 export const saveRestaurant = (name, description, location, average_rating) =>
   db
     .prepare(

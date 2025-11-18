@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import type { User } from "../type/User";
 import apiClient from "../api/apiClient";
-import { useParams } from "react-router-dom";
+import { Avatar } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Profil() {
   const { id } = useParams();
   const [user, setUser] = useState<User>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     apiClient
@@ -16,6 +18,10 @@ function Profil() {
 
   return (
     <>
+      <div className="fo-oldal-avatar">
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+      </div>
+
       <h1>Profil:</h1>
       <h2>{user?.name}</h2>
       <h3>{user?.email}</h3>

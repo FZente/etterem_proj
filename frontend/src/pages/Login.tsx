@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { User } from "../type/User";
 import apiClient from "../api/apiClient";
 import { useNavigate } from "react-router-dom";
-
+import { Avatar } from "@mui/material";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -23,6 +23,9 @@ function Login() {
 
   return (
     <>
+      <div className="fo-oldal-avatar">
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+      </div>
       <h1>Login:</h1>
       <h2>Email:</h2>
       <input

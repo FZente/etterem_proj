@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 
 function App() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -22,6 +23,9 @@ function App() {
 
   return (
     <>
+    <div className="fo-oldal-avatar">
+      <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+    </div>
     <div className="top-right-buttons">
       <button onClick={() => navigate("/login")}>Login</button>
       <button onClick={() => navigate("/register")}>Registration</button>

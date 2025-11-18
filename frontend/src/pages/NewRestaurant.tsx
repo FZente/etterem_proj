@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { Restaurant } from "../type/Restaurant";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
+import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
 
 const NewRestaurant = () => {
   const [restaurant, setRestaurant] = useState<Restaurant>({
@@ -10,6 +12,8 @@ const NewRestaurant = () => {
     location: "",
     average_rating: 0,
   });
+
+  const navigate = useNavigate();
 
   const submit = () => {
     apiClient
@@ -20,6 +24,9 @@ const NewRestaurant = () => {
 
   return (
     <>
+      <div className="fo-oldal-avatar">
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+      </div>
       <h1>Név:</h1>
       <input
         type="text"

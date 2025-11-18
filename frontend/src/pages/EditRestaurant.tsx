@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import type { Restaurant } from "../type/Restaurant";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Avatar } from "@mui/material";
 
 const EditRestaurant = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [restaurant, setRestaurant] = useState<Restaurant>({
     name: "",
@@ -37,6 +39,9 @@ const EditRestaurant = () => {
 
   return (
     <>
+      <div className="fo-oldal-avatar">
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+      </div>
       <h1>Név:</h1>
       <input
         type="text"

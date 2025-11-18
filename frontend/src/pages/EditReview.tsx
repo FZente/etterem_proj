@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import type { Review } from "../type/Review";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Avatar } from "@mui/material";
 
 const EditReview = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [review, setReview] = useState<Review>({
     rating: 0,
@@ -33,6 +35,9 @@ const EditReview = () => {
 
   return (
     <>
+      <div className="fo-oldal-avatar">
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+      </div>
       <h1>Értékelés:</h1>
       <input
         type="number"

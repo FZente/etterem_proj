@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { User } from "../type/User";
 import apiClient from "../api/apiClient";
 import { useNavigate } from "react-router-dom";
+import { Avatar } from "@mui/material";
 
 function Register() {
   const [name, setName] = useState("");
@@ -24,6 +25,9 @@ function Register() {
 
   return (
     <>
+      <div className="fo-oldal-avatar">
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+      </div>
       <h1>Registration:</h1>
       <h2>Name:</h2>
       <input
