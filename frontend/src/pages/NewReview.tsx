@@ -3,7 +3,7 @@ import type { Review } from "../type/Review";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
 import { Avatar } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const NewReview = () => {
   const [review, setReview] = useState<Review>({
@@ -12,10 +12,16 @@ const NewReview = () => {
   });
 
   const navigate = useNavigate();
+  const { id } = useParams(); 
+  const user = JSON.parse(localStorage.getItem("user") || "{}"); 
 
   const submit = () => {
     apiClient
-      .post("/reviews", review)
+      .post("/reviews", {
+        ...review,
+        user_id: user.id,
+        restaurant_id: Number(id)
+      })
       .then(() => toast.success("Sikeres hozzáadás!"))
       .catch(() => toast.error("Sikertelen hozzáadás!"));
   };
@@ -23,7 +29,7 @@ const NewReview = () => {
   return (
     <>
       <div className="fo-oldal-avatar">
-        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)} sx={{ width: 56, height: 56 }}/>
       </div>
       <h1>Értékelés:</h1>
       <input

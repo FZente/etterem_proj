@@ -23,11 +23,13 @@ router.get("/restaurant/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { rating, comment } = req.body;
-  if (!rating || !comment) {
+  const { rating, comment, user_id, restaurant_id } = req.body;
+
+  if (!rating || !comment || !user_id || !restaurant_id) {
     return res.status(400).json({ message: "Missing required data" });
   }
-  const saved = Reviews.saveReview(rating, comment);
+
+  const saved = Reviews.saveReview(rating, comment, user_id, restaurant_id);
   const rev = Reviews.getReviewsById(saved.lastInsertRowid);
   res.json(rev);
 });

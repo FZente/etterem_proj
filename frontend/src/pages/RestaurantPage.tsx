@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Avatar from "@mui/material/Avatar";
+import { Button } from "@mui/material";
 
 function RestaurantPage() {
   const {id} = useParams();
@@ -28,15 +29,33 @@ function RestaurantPage() {
       .catch((result) => console.error(result));
   }, [id]);
 
+  const handleButtonClick = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login"); 
+      return;
+    }
+    else{
+      navigate("/new-review"); 
+      return;
+    }
+    console.log("Button működik, felhasználó bejelentkezett!");
+  };
+
+
   return (
     <>
       <div className="fo-oldal-avatar">
-        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)} sx={{ width: 56, height: 56 }}/>
       </div>
       <h1>Restaurant</h1>
       <h2>{restaurant?.name}</h2>
       <h3>{restaurant?.description}</h3>
 
+      <Button variant="outlined" onClick={handleButtonClick}>
+        Write Review
+      </Button>
       <Grid container columns={12} spacing={2} sx={{ mt: 2 }}>
         {reviews.map((r) => (
           <Grid key={r.id} size={{ xs: 12, sm: 6, md: 4 }}>

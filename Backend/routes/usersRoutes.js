@@ -43,7 +43,7 @@ router.post("/login", (req, res) => {
     return res.status(401).json({ message: "Invalid credentials" });
   }
   const token = jwt.sign({ id: user.id, email: user.email }, "secret_key", {
-    expiresIn: "30m",
+    expiresIn: "15m",
   });
   res.json(token);
 });
@@ -87,7 +87,7 @@ router.patch("/:id", auth, (req, res) => {
   res.json(user);
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", auth, (req, res) => {
   const user = Users.getUserById(+req.params.id);
   if (!user) {
     return res.status(404).json({ message: "User not found!" });

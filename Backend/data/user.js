@@ -29,23 +29,3 @@ export const deleteUser = (id) =>
   db.prepare("DELETE FROM users WHERE id = ?").run(id);
 
 const count = db.prepare("SELECT COUNT(*) AS count FROM users").get().count;
-
-if (count === 0) {
-  const insert = db.prepare(`
-    INSERT INTO users (name, email, password)
-    VALUES (?, ?, ?)
-  `);
-
-  const defaultUsers = [
-    ["Béla", "bela@gmail.com", "gombGyár123"],
-    ["Anna", "anna@gmail.com", "123456"],
-    ["Sanyi", "sanyi@gmail.com", "sanyiakirály"],
-    ["Pál", "pal@gmail.com", "pallopal918"],
-  ];
-
-  const insertMany = db.transaction((users) => {
-    for (const r of users) insert.run(...r);
-  });
-
-  insertMany(defaultUsers);
-}

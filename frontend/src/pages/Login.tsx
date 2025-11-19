@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { User } from "../type/User";
 import apiClient from "../api/apiClient";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
@@ -10,21 +9,26 @@ function Login() {
   const navigate = useNavigate();
 
   const onSubmit = () => {
-    const u: Partial<User> = {
-      email,
-      password,
-    };
-
     apiClient
-      .post(`/users/login`, u)
-      .then((response) => alert(response.status))
-      .catch((result) => console.error(alert(result)));
+      .post(`/users/login`, { email, password })
+      .then(async (response) => {
+        const token = response.data;
+        localStorage.setItem("token", token);
+        const decoded = JSON.parse(atob(token.split(".")[1]));
+        const userId = decoded.id;
+        const userResponse = await apiClient.get(`/users/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        localStorage.setItem("user", JSON.stringify(userResponse.data));
+        navigate("/");
+      })
+      .catch(() => alert("Invalid credentials"));
   };
 
   return (
     <>
       <div className="fo-oldal-avatar">
-        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)}/>
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)} sx={{ width: 56, height: 56 }}/>
       </div>
       <h1>Login:</h1>
       <h2>Email:</h2>
