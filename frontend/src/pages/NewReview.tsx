@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const NewReview = () => {
   const [review, setReview] = useState<Review>({
-    rating: 0,
+    rating: 1,
     comment: "",
   });
 
@@ -36,20 +36,38 @@ const NewReview = () => {
   };
 
   const submit = () => {
-    if (!validate()) return;
+  console.log("Submit gomb megnyomva");
+  if (!user || !user.id) {
+    console.log("User nincs bejelentkezve");
+    toast.error("Először jelentkezz be!");
+    navigate("/login");
+    return;
+  }
+  if (!id) {
+    console.log("Nincs restaurant ID");
+    toast.error("Hiba: nem található étterem ID!");
+    return;
+  }
+  if (!validate()) return;
 
-    apiClient
-      .post("/reviews", {
-        ...review,
-        user_id: user.id,
-        restaurant_id: Number(id)
-      })
-      .then(() => {
-        toast.success("Sikeres értékelés!");
-        navigate(`/restaurants/${id}`); 
-      })
-      .catch(() => toast.error("Sikertelen hozzáadás!"));
-  };
+  console.log("POST küldése...", { review, user_id: user.id, restaurant_id: id });
+
+  apiClient
+    .post("/reviews", {
+      ...review,
+      user_id: user.id,
+      restaurant_id: Number(id)
+    })
+    .then(() => {
+      console.log("Sikeres POST");
+      toast.success("Sikeres értékelés!");
+      navigate(`/restaurant/${id}`);
+    })
+    .catch((err) => {
+      console.error("POST hiba:", err.response?.data || err);
+      toast.error("Sikertelen hozzáadás!");
+    });
+};
 
   return (
     <>

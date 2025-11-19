@@ -37,7 +37,7 @@ function RestaurantPage() {
       return;
     }
     else{
-      navigate("/new-review"); 
+      navigate(`/restaurants/${restaurant?.id}/review`); 
       return;
     }
     console.log("Button működik, felhasználó bejelentkezett!");
