@@ -38,7 +38,7 @@ function App() {
     <div className="top-right-buttons">
     {user ? (
       <Avatar
-        onClick={() => navigate(`/profile/${user.id}`)}
+        onClick={() => navigate(`/profil/${user.id}`)}
         sx={{ cursor: "pointer" }}
       >
       </Avatar>

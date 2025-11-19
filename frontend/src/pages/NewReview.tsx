@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Review } from "../type/Review";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
-import { Avatar } from "@mui/material";
+import { Avatar, TextField, Button, Card, CardContent } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 
 const NewReview = () => {
@@ -11,42 +11,93 @@ const NewReview = () => {
     comment: "",
   });
 
-  const navigate = useNavigate();
   const { id } = useParams(); 
-  const user = JSON.parse(localStorage.getItem("user") || "{}"); 
+  const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  useEffect(() => {
+    if (!user) {
+      toast.error("Először jelentkezz be!");
+      navigate("/login");
+    }
+  }, []);
+
+  const validate = () => {
+    if (review.rating < 1 || review.rating > 5) {
+      toast.error("A rating csak 1 és 5 között lehet!");
+      return false;
+    }
+    if (review.comment.trim() === "") {
+      toast.error("A comment nem lehet üres!");
+      return false;
+    }
+    return true;
+  };
 
   const submit = () => {
+    if (!validate()) return;
+
     apiClient
       .post("/reviews", {
         ...review,
         user_id: user.id,
         restaurant_id: Number(id)
       })
-      .then(() => toast.success("Sikeres hozzáadás!"))
+      .then(() => {
+        toast.success("Sikeres értékelés!");
+        navigate(`/restaurants/${id}`); 
+      })
       .catch(() => toast.error("Sikertelen hozzáadás!"));
   };
 
   return (
     <>
       <div className="fo-oldal-avatar">
-        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)} sx={{ width: 56, height: 56 }}/>
+        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)} />
       </div>
-      <h1>Értékelés:</h1>
-      <input
-        type="text"
-        value={review.rating}
-        onChange={(e) => setReview({ ...review, rating: Number(e.target.value) })}
-      />
 
-      <h1>Comment</h1>
-      <input
-        type="text"
-        value={review.comment}
-        onChange={(e) => setReview({ ...review, comment: e.target.value })}
-      />
+      <h1>Új értékelés</h1>
 
-      <br />
-      <button onClick={submit}>Hozzáadás</button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
+        }}
+      >
+        <Card sx={{ width: 350, backgroundColor: "white" }}>
+          <CardContent>
+            <TextField
+              label="Rating (1-5)"
+              type="number"
+              value={review.rating}
+              onChange={(e) =>
+                setReview({ ...review, rating: Number(e.target.value) })
+              }
+              fullWidth
+              inputProps={{ min: 1, max: 5 }}
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              label="Comment"
+              multiline
+              rows={3}
+              value={review.comment}
+              onChange={(e) =>
+                setReview({ ...review, comment: e.target.value })
+              }
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+
+            <Button variant="contained" fullWidth onClick={submit}>
+              Küldés
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 };
