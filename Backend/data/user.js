@@ -6,13 +6,17 @@ db.prepare(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     email TEXT,
-    password TEXT
+    password TEXT,
+    role TEXT DEFAULT 'user'
     )`
 ).run();
 
 export const getAllUsers = () => {
   return db.prepare("SELECT * FROM users").all();
 };
+export const setAdmin = (id) => {
+  db.prepare("UPDATE users SET role = 'admin' WHERE id = ?").run(id);
+}
 export const getUserById = (id) =>
   db.prepare("SELECT * FROM users WHERE id = ?").get(id);
 export const getUserByEmail = (email) =>
