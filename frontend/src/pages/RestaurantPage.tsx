@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import type { Restaurant } from "../type/Restaurant";
 import type { Review } from "../type/Review";
+import type { User } from "../type/User";
 import apiClient from "../api/apiClient";
 import { useNavigate, useParams } from "react-router-dom";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Avatar from "@mui/material/Avatar";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
 
 function RestaurantPage() {
-  const {id} = useParams();
+  const { id } = useParams();
   const [restaurant, setRestaurant] = useState<Restaurant>();
+  const [user, setUser] = useState<User>();
   const [reviews, setReviews] = useState<Review[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(id)
     apiClient
       .get(`/restaurants/${id}`)
       .then((response) => setRestaurant(response.data))
@@ -25,31 +25,53 @@ function RestaurantPage() {
 
     apiClient
       .get(`/reviews/restaurant/${id}`)
-      .then(res => setReviews(res.data))
+      .then((res) => setReviews(res.data))
       .catch((result) => console.error(result));
   }, [id]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleButtonClick = () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      navigate("/login"); 
+      navigate("/login");
       return;
-    }
-    else{
-      navigate(`/restaurants/${restaurant?.id}/review`); 
+    } else {
+      navigate(`/restaurants/${restaurant?.id}/review`);
       return;
     }
     console.log("Button működik, felhasználó bejelentkezett!");
   };
 
+  const deleteRestaurant = () => {
+    apiClient
+      .put(`/restaurants/${id}`)
+      .then((response) => alert(response.status))
+      .catch((result) => console.error(alert(result)));
+  };
 
   return (
     <>
-      <div className="fo-oldal-avatar">
-        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)} sx={{ width: 56, height: 56 }}/>
-      </div>
       <h1>Restaurant</h1>
+      {user?.role === "admin" && (
+        <Button
+          variant="outlined"
+          onClick={() => navigate(`/edit-restaurant/${id}`)}
+        >
+          Szerkesztés
+        </Button>
+      )}
+      {user?.role === "admin" && (
+        <Button variant="outlined" onClick={deleteRestaurant}>
+          Törlés
+        </Button>
+      )}
       <h2>{restaurant?.name}</h2>
       <h3>{restaurant?.description}</h3>
 

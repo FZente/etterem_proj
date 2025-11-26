@@ -6,6 +6,7 @@ import { Avatar } from "@mui/material";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = () => {
@@ -19,6 +20,7 @@ function Login() {
         const userResponse = await apiClient.get(`/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        localStorage.setItem("loggedIn", "true");
         localStorage.setItem("user", JSON.stringify(userResponse.data));
         navigate("/");
       })
@@ -28,7 +30,11 @@ function Login() {
   return (
     <>
       <div className="fo-oldal-avatar">
-        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)} sx={{ width: 56, height: 56 }}/>
+        <Avatar
+          src="/public/logo.png"
+          onClick={() => navigate(`/`)}
+          sx={{ width: 56, height: 56 }}
+        />
       </div>
       <h1>Login:</h1>
       <h2>Email:</h2>
@@ -40,15 +46,29 @@ function Login() {
       />
       <h2>Password:</h2>
       <input
-        type="text"
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
+        type={showPassword ? "text" : "password"}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
+      <div>
+        <input
+          type="checkbox"
+          checked={showPassword}
+          onChange={() => setShowPassword(!showPassword)}
+        />
+        <label>Show Password</label>
+      </div>
       <br />
       <button onClick={onSubmit}>Login</button>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "40px" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          marginTop: "40px",
+        }}
+      >
         <p>If you have a registered profil: </p>
         <button onClick={() => navigate("/register")}>Register</button>
       </div>

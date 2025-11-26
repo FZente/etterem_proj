@@ -12,6 +12,7 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = () => {
@@ -63,11 +64,18 @@ function Register() {
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
               <h2>Password:</h2>
               <input
-                type="text"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
+              <div>
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+                <label>Show Password</label>
+              </div>
               <br />
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>

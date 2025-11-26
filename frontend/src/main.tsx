@@ -10,11 +10,12 @@ import RestaurantPage from "./pages/RestaurantPage.tsx";
 import NewRestaurant from "./pages/NewRestaurant.tsx";
 import NewReview from "./pages/NewReview.tsx";
 import EditRestaurant from "./pages/EditRestaurant.tsx";
-import EditReview from "./pages/EditReview.tsx";
+import Navbar from "./components/Navbar.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/register" element={<Register />} />
@@ -24,7 +25,6 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/new-restaurant" element={<NewRestaurant />} />
         <Route path="/restaurants/:id/review" element={<NewReview />} />
         <Route path="/edit-restaurant/:id" element={<EditRestaurant />} />
-        <Route path="/edit-review/:id" element={<EditReview />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

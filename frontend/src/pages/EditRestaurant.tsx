@@ -3,7 +3,6 @@ import type { Restaurant } from "../type/Restaurant";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { Avatar } from "@mui/material";
 
 const EditRestaurant = () => {
   const { id } = useParams();
@@ -39,9 +38,6 @@ const EditRestaurant = () => {
 
   return (
     <>
-      <div className="fo-oldal-avatar">
-        <Avatar src="/public/logo.png" onClick={() => navigate(`/`)} sx={{ width: 56, height: 56 }}/>
-      </div>
       <h1>Név:</h1>
       <input
         type="text"
@@ -53,21 +49,30 @@ const EditRestaurant = () => {
       <input
         type="text"
         value={restaurant.description}
-        onChange={(e) => setRestaurant({ ...restaurant, description: e.target.value })}
+        onChange={(e) =>
+          setRestaurant({ ...restaurant, description: e.target.value })
+        }
       />
 
       <h1>Hely</h1>
       <input
         type="text"
         value={restaurant.location}
-        onChange={(e) => setRestaurant({ ...restaurant, location: e.target.value })}
+        onChange={(e) =>
+          setRestaurant({ ...restaurant, location: e.target.value })
+        }
       />
 
       <h1>Átlag értékelés</h1>
       <input
         type="number"
         value={restaurant.average_rating}
-        onChange={(e) => setRestaurant({ ...restaurant, average_rating: Number(e.target.value) })}
+        onChange={(e) =>
+          setRestaurant({
+            ...restaurant,
+            average_rating: Number(e.target.value),
+          })
+        }
       />
 
       <br />
