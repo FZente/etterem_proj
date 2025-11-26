@@ -17,7 +17,7 @@ router.get("/:id", (req, res) => {
   res.json(rest);
 });
 
-router.post("/", (req, res) => {
+router.post("/", auth, (req, res) => {
   const { name, description, location, average_rating } = req.body;
   if (!name || !description || !location || !average_rating) {
     return res.status(400).json({ message: "Missing required data" });

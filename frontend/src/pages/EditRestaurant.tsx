@@ -31,7 +31,11 @@ const EditRestaurant = () => {
     };
 
     apiClient
-      .put(`/restaurants/${id}`, dto)
+      .put(`/restaurants/${id}`, dto, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then(() => toast.success("Sikeres szerkesztés!"))
       .catch(() => toast.error("Sikertelen szerkesztés!"));
   };

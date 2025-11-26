@@ -38,7 +38,7 @@ const NewRestaurant = () => {
 
       <h1>Hely</h1>
       <input
-        type="number"
+        type="text"
         value={restaurant.location}
         onChange={(e) =>
           setRestaurant({ ...restaurant, location: e.target.value })
@@ -47,7 +47,7 @@ const NewRestaurant = () => {
 
       <h1>Átlag étrékelés</h1>
       <input
-        type="text"
+        type="number"
         value={restaurant.average_rating}
         onChange={(e) =>
           setRestaurant({
