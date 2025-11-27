@@ -17,6 +17,15 @@ router.get("/:id", (req, res) => {
   res.json(rest);
 });
 
+router.get("/:name", (req, res) => {
+  const name = req.params.name;
+  const rest = Restaurants.getRestaurantByName(name);
+  if (!rest) {
+    return res.status(404).json({ message: "Restaurant not found!" });
+  }
+  res.json(rest);
+});
+
 router.post("/", auth, (req, res) => {
   const { name, description, location, average_rating } = req.body;
   if (!name || !description || !location || !average_rating) {

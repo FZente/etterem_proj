@@ -8,13 +8,10 @@ import Toolbar from "@mui/material/Toolbar";
 import { TextField } from "@mui/material";
 import AccountMenu from "./Teszt";
 import Typography from "@mui/material/Typography";
-import apiClient from "../api/apiClient";
-import type { Restaurant } from "../type/Restaurant";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
-  const [restaurant, setRestaurant] = useState<Restaurant>();
   const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
@@ -23,14 +20,6 @@ export default function Navbar() {
       setUser(JSON.parse(storedUser));
     }
   }, []);
-
-  useEffect(() => {
-    apiClient
-      .get(`/restaurant/${search}`)
-      .then((response) => setRestaurant(response.data))
-      .catch((err) => console.error(err));
-  }),
-    [search];
 
   const logout = () => {
     localStorage.removeItem("token");
