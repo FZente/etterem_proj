@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import type { Restaurant } from "../type/Restaurant";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const EditRestaurant = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [restaurant, setRestaurant] = useState<Restaurant>({
     name: "",

@@ -22,25 +22,29 @@ function App() {
 
   return (
     <>
-      <Grid container spacing={3} justifyContent="center" sx={{ padding: 2 }}>
+      <Grid
+        container
+        spacing={3}
+        justifyContent="center"
+        sx={{ padding: 2 }}
+        size={{ xs: 12, sm: 6, md: 4 }}
+      >
         {restaurants.map((r) => (
-          <Grid key={r.id} size={{ xs: 12, sm: 6, md: 4 }}>
-            <Card sx={{ maxWidth: 345, margin: "auto" }}>
-              <CardActionArea onClick={() => navigate(`/restaurant/${r?.id}`)}>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {r?.name}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {r?.description}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {r?.average_rating}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
+          <Card sx={{ maxWidth: 345, margin: "auto" }}>
+            <CardActionArea onClick={() => navigate(`/restaurant/${r?.id}`)}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {r?.name}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  {r?.description}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  {r?.average_rating}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         ))}
       </Grid>
     </>

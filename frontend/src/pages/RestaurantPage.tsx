@@ -78,16 +78,24 @@ function RestaurantPage() {
       <Button variant="outlined" onClick={handleButtonClick}>
         Write Review
       </Button>
-      <Grid container columns={12} spacing={2} sx={{ mt: 2 }}>
+      <Grid
+        container
+        spacing={3}
+        sx={{ mt: 2 }}
+        size={{ xs: 12, sm: 6, md: 4 }}
+      >
         {reviews.map((r) => (
-          <Grid key={r.id} size={{ xs: 12, sm: 6, md: 4 }}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">{r.rating}</Typography>
-                <Typography>{r.comment}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">{r.rating}</Typography>
+              <Typography>{r.comment}</Typography>
+              <Typography>
+                {r.created_at
+                  ? new Date(r.created_at).toLocaleString("hu-HU")
+                  : ""}
+              </Typography>
+            </CardContent>
+          </Card>
         ))}
       </Grid>
     </>

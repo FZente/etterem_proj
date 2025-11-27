@@ -67,25 +67,6 @@ button:focus-visible {
   }
 }
 
-.top-right-buttons button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.top-right-buttons Avatar {
-  margin-left: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.fo-oldal-avatar {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  cursor: pointer;
-}
-
 .top-bar {
   position: fixed;
   top: 0;
