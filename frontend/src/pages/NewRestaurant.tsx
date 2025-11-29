@@ -1,21 +1,43 @@
 import { useState } from "react";
-import type { Restaurant } from "../type/Restaurant";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
 
 const NewRestaurant = () => {
-  const [restaurant, setRestaurant] = useState<Restaurant>({
+  const [restaurant, setRestaurant] = useState({
     name: "",
     description: "",
     location: "",
-    average_rating: 0,
   });
 
-  const submit = () => {
-    apiClient
-      .post("/restaurants", restaurant)
-      .then(() => toast.success("Sikeres hozzáadás!"))
-      .catch(() => toast.error("Sikertelen hozzáadás!"));
+  const submit = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("Nincs bejelentkezve!");
+        return;
+      }
+
+      await apiClient.post(
+        "/restaurants",
+        {
+          name: restaurant.name,
+          description: restaurant.description,
+          location: restaurant.location,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      toast.success("Sikeres hozzáadás!");
+      setRestaurant({ name: "", description: "", location: "" }); // reset
+    } catch (error) {
+      console.error(error);
+      toast.error("Sikertelen hozzáadás!");
+    }
   };
 
   return (
@@ -42,18 +64,6 @@ const NewRestaurant = () => {
         value={restaurant.location}
         onChange={(e) =>
           setRestaurant({ ...restaurant, location: e.target.value })
-        }
-      />
-
-      <h1>Átlag étrékelés</h1>
-      <input
-        type="number"
-        value={restaurant.average_rating}
-        onChange={(e) =>
-          setRestaurant({
-            ...restaurant,
-            average_rating: Number(e.target.value),
-          })
         }
       />
 

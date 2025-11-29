@@ -50,11 +50,27 @@ function RestaurantPage() {
   };
 
   const deleteRestaurant = () => {
-    apiClient
-      .put(`/restaurants/${id}`)
-      .then((response) => alert(response.status))
-      .catch((result) => console.error(alert(result)));
-  };
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Nincs bejelentkezve!");
+    return;
+  }
+
+  apiClient
+    .delete(`/restaurants/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(() => {
+      alert("Sikeres törlés!");
+      navigate("/"); // vissza a listára
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("Sikertelen törlés!");
+    });
+};
 
   return (
     <>
@@ -87,13 +103,13 @@ function RestaurantPage() {
         {reviews.map((r) => (
           <Card>
             <CardContent>
-              <Typography variant="h6">{r.rating}</Typography>
-              <Typography>{r.comment}</Typography>
               <Typography>
                 {r.created_at
                   ? new Date(r.created_at).toLocaleString("hu-HU")
                   : ""}
               </Typography>
+              <Typography variant="h6">{r.rating}</Typography>
+              <Typography>{r.comment}</Typography>
             </CardContent>
           </Card>
         ))}

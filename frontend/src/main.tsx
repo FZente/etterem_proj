@@ -11,6 +11,7 @@ import NewRestaurant from "./pages/NewRestaurant.tsx";
 import NewReview from "./pages/NewReview.tsx";
 import EditRestaurant from "./pages/EditRestaurant.tsx";
 import Navbar from "./components/Navbar.tsx";
+import { ToastContainer } from "react-toastify";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -27,5 +28,6 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/edit-restaurant/:id" element={<EditRestaurant />} />
       </Routes>
     </BrowserRouter>
+    <ToastContainer theme="colored" />
   </StrictMode>
 );

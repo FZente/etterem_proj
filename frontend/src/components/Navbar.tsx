@@ -57,9 +57,12 @@ export default function Navbar() {
               <TextField
                 variant="outlined"
                 size="small"
-                placeholder="Search"
+                placeholder="Search restaurants..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  navigate(`/?search=${e.target.value}`);
+                }}
                 sx={{
                   backgroundColor: "white",
                   borderRadius: 1,

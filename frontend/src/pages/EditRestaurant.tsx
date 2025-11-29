@@ -66,18 +66,6 @@ const EditRestaurant = () => {
         }
       />
 
-      <h1>Átlag értékelés</h1>
-      <input
-        type="number"
-        value={restaurant.average_rating}
-        onChange={(e) =>
-          setRestaurant({
-            ...restaurant,
-            average_rating: Number(e.target.value),
-          })
-        }
-      />
-
       <br />
       <button onClick={submit}>Szerkesztés</button>
     </>

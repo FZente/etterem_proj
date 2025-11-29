@@ -27,15 +27,14 @@ router.get("/:name", (req, res) => {
 });
 
 router.post("/", auth, (req, res) => {
-  const { name, description, location, average_rating } = req.body;
-  if (!name || !description || !location || !average_rating) {
+  const { name, description, location} = req.body;
+  if (!name || !description || !location) {
     return res.status(400).json({ message: "Missing required data" });
   }
   const saved = Restaurants.saveRestaurant(
     name,
     description,
-    location,
-    average_rating
+    location
   );
   const rest = Restaurants.getRestaurantById(saved.lastInsertRowid);
   res.json(rest);
@@ -47,11 +46,11 @@ router.put("/:id", auth, (req, res) => {
   if (!rest) {
     return res.status(404).json({ message: "Restaurant not found" });
   }
-  const { name, description, location, average_rating } = req.body;
-  if (!name || !description || !location || !average_rating) {
+  const { name, description, location} = req.body;
+  if (!name || !description || !location ) {
     return res.status(400).json({ message: "Missing required data" });
   }
-  Restaurants.updateRestaurant(id, name, description, location, average_rating);
+  Restaurants.updateRestaurant(id, name, description, location);
   rest = Restaurants.getRestaurantById(id);
   res.json(rest);
 });
@@ -62,13 +61,12 @@ router.patch("/:id", auth, (req, res) => {
   if (!rest) {
     return res.status(404).json({ message: "Restaurant not found" });
   }
-  const { name, description, location, average_rating } = req.body;
+  const { name, description, location } = req.body;
   Restaurants.updateRestaurant(
     id,
     name || rest.name,
     description || rest.description,
-    location || rest.location,
-    average_rating || rest.average_rating
+    location || rest.location
   );
   rest = Restaurants.getRestaurantById(id);
   res.json(rest);
