@@ -48,55 +48,55 @@ router.post("/login", (req, res) => {
   res.json(token);
 });
 
-router.put("/:id", auth, (req, res) => {
-  const id = +req.params.id;
-  let user = Users.getUserById(id);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
-    return res.status(400).json({ message: "Missing required data" });
-  }
-  const salt = bcrypt.genSaltSync();
-  const hashedPassword = bcrypt.hashSync(password, salt);
-  Users.updateUser(id, name, email, hashedPassword);
-  user = Users.getUserById(id);
-  res.json(user);
-});
+// router.put("/:id", auth, (req, res) => {
+//   const id = +req.params.id;
+//   let user = Users.getUserById(id);
+//   if (!user) {
+//     return res.status(404).json({ message: "User not found" });
+//   }
+//   const { name, email, password } = req.body;
+//   if (!name || !email || !password) {
+//     return res.status(400).json({ message: "Missing required data" });
+//   }
+//   const salt = bcrypt.genSaltSync();
+//   const hashedPassword = bcrypt.hashSync(password, salt);
+//   Users.updateUser(id, name, email, hashedPassword);
+//   user = Users.getUserById(id);
+//   res.json(user);
+// });
 
-router.patch("/:id", auth, (req, res) => {
-  const id = +req.params.id;
-  let user = Users.getUserById(id);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-  const { name, email, password } = req.body;
-  let hashedPassword;
-  if (password) {
-    const salt = bcrypt.genSaltSync();
-    hashedPassword = bcrypt.hashSync(password, salt);
-  }
-  Users.updateUser(
-    id,
-    name || user.name,
-    email || user.email,
-    hashedPassword || user.password
-  );
-  user = Users.getUserById(id);
-  res.json(user);
-});
+// router.patch("/:id", auth, (req, res) => {
+//   const id = +req.params.id;
+//   let user = Users.getUserById(id);
+//   if (!user) {
+//     return res.status(404).json({ message: "User not found" });
+//   }
+//   const { name, email, password } = req.body;
+//   let hashedPassword;
+//   if (password) {
+//     const salt = bcrypt.genSaltSync();
+//     hashedPassword = bcrypt.hashSync(password, salt);
+//   }
+//   Users.updateUser(
+//     id,
+//     name || user.name,
+//     email || user.email,
+//     hashedPassword || user.password
+//   );
+//   user = Users.getUserById(id);
+//   res.json(user);
+// });
 
-router.delete("/:id", auth, (req, res) => {
-  const user = Users.getUserById(+req.params.id);
-  if (!user) {
-    return res.status(404).json({ message: "User not found!" });
-  }
-  Users.deleteUser(+req.params.id);
-  delete req.userId;
-  delete req.headers.authorization;
-  res.json({ message: "User delete success" });
-});
+// router.delete("/:id", auth, (req, res) => {
+//   const user = Users.getUserById(+req.params.id);
+//   if (!user) {
+//     return res.status(404).json({ message: "User not found!" });
+//   }
+//   Users.deleteUser(+req.params.id);
+//   delete req.userId;
+//   delete req.headers.authorization;
+//   res.json({ message: "User delete success" });
+// });
 
 export function auth(req, res, next) {
   const accessToken = req.headers.authorization;

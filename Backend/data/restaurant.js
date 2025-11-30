@@ -63,7 +63,6 @@ export const updateRestaurant = (
 export const deleteRestaurant = (id) =>
   db.prepare("DELETE FROM restaurants WHERE id = ?").run(id);
 
-//Alapértelmezett éttermek feltöltése
 const count = db
   .prepare("SELECT COUNT(*) AS count FROM restaurants")
   .get().count;

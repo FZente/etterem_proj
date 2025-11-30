@@ -55,23 +55,6 @@ router.put("/:id", auth, (req, res) => {
   res.json(rest);
 });
 
-router.patch("/:id", auth, (req, res) => {
-  const id = +req.params.id;
-  let rest = Restaurants.getRestaurantById(id);
-  if (!rest) {
-    return res.status(404).json({ message: "Restaurant not found" });
-  }
-  const { name, description, location } = req.body;
-  Restaurants.updateRestaurant(
-    id,
-    name || rest.name,
-    description || rest.description,
-    location || rest.location
-  );
-  rest = Restaurants.getRestaurantById(id);
-  res.json(rest);
-});
-
 router.delete("/:id", (req, res) => {
   const id = +req.params.id;
   const rest = Restaurants.getRestaurantById(id);

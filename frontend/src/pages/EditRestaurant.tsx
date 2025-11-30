@@ -3,6 +3,7 @@ import type { Restaurant } from "../type/Restaurant";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { Card, CardContent, Button, TextField } from "@mui/material";
 
 const EditRestaurant = () => {
   const { id } = useParams();
@@ -41,33 +42,58 @@ const EditRestaurant = () => {
 
   return (
     <>
-      <h1>Név:</h1>
-      <input
-        type="text"
-        value={restaurant.name}
-        onChange={(e) => setRestaurant({ ...restaurant, name: e.target.value })}
-      />
+    <h1>Étterem szerkesztés</h1>
+    <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
+        }}
+      >
+        <Card sx={{ width: 350, backgroundColor: "white" }}>
+          <CardContent>
+            <TextField
+              label="Név"
+              type="text"
+              value={restaurant.name}
+              onChange={(e) =>
+                setRestaurant({ ...restaurant, name: e.target.value })
+              }
+              fullWidth
+              inputProps={{ min: 1, max: 5 }}
+              sx={{ mb: 2 }}
+            />
 
-      <h1>Leírás</h1>
-      <input
-        type="text"
-        value={restaurant.description}
-        onChange={(e) =>
-          setRestaurant({ ...restaurant, description: e.target.value })
-        }
-      />
+            <TextField
+              label="Leírás"
+              multiline
+              rows={3}
+              value={restaurant.description}
+              onChange={(e) =>
+                setRestaurant({ ...restaurant, description: e.target.value })
+              }
+              fullWidth
+              sx={{ mb: 2 }}
+            />
 
-      <h1>Hely</h1>
-      <input
-        type="text"
-        value={restaurant.location}
-        onChange={(e) =>
-          setRestaurant({ ...restaurant, location: e.target.value })
-        }
-      />
+            <TextField
+              label="Helyszín"
+              type="text"
+              value={restaurant.location}
+              onChange={(e) =>
+                setRestaurant({ ...restaurant, location: e.target.value })
+              }
+              fullWidth
+              inputProps={{ min: 1, max: 5 }}
+              sx={{ mb: 2 }}
+            />
 
-      <br />
-      <button onClick={submit}>Szerkesztés</button>
+            <Button variant="contained" fullWidth onClick={submit}>
+              Küldés
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 };

@@ -34,41 +34,41 @@ router.post("/", (req, res) => {
   res.json(rev);
 });
 
-router.put("/:id", (req, res) => {
-  const id = +req.params.id;
-  let rev = Reviews.getReviewsById(id);
-  if (!rev) {
-    return res.status(404).json({ message: "Review not found!" });
-  }
-  const { rating, comment } = req.body;
-  if (!rating || !comment) {
-    return res.status(400).json({ message: "Missing required data" });
-  }
-  Reviews.updateReview(id, rating, comment);
-  rev = Reviews.getReviewsById(id);
-  res.json(rev);
-});
+// router.put("/:id", (req, res) => {
+//   const id = +req.params.id;
+//   let rev = Reviews.getReviewsById(id);
+//   if (!rev) {
+//     return res.status(404).json({ message: "Review not found!" });
+//   }
+//   const { rating, comment } = req.body;
+//   if (!rating || !comment) {
+//     return res.status(400).json({ message: "Missing required data" });
+//   }
+//   Reviews.updateReview(id, rating, comment);
+//   rev = Reviews.getReviewsById(id);
+//   res.json(rev);
+// });
 
-router.patch("/:id", (req, res) => {
-  const id = +req.params.id;
-  let rev = Reviews.getReviewsById(id);
-  if (!rev) {
-    return res.status(404).json({ message: "Review not found!" });
-  }
-  const { rating, comment } = req.body;
-  Reviews.updateReview(id, rating || rev.rating, comment || rev.comment);
-  rev = Reviews.getReviewsById(id);
-  res.json(rev);
-});
+// router.patch("/:id", (req, res) => {
+//   const id = +req.params.id;
+//   let rev = Reviews.getReviewsById(id);
+//   if (!rev) {
+//     return res.status(404).json({ message: "Review not found!" });
+//   }
+//   const { rating, comment } = req.body;
+//   Reviews.updateReview(id, rating || rev.rating, comment || rev.comment);
+//   rev = Reviews.getReviewsById(id);
+//   res.json(rev);
+// });
 
-router.delete("/:id", (req, res) => {
-  const id = +req.params.id;
-  const rev = Reviews.getReviewsById(id);
-  if (!rev) {
-    return res.status(404).json({ message: "Review not found" });
-  }
-  Reviews.deleteReview(id);
-  res.sendStatus(204);
-});
+// router.delete("/:id", (req, res) => {
+//   const id = +req.params.id;
+//   const rev = Reviews.getReviewsById(id);
+//   if (!rev) {
+//     return res.status(404).json({ message: "Review not found" });
+//   }
+//   Reviews.deleteReview(id);
+//   res.sendStatus(204);
+// });
 
 export default router;

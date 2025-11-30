@@ -2,10 +2,7 @@ import { useState } from "react";
 import type { User } from "../type/User";
 import apiClient from "../api/apiClient";
 import { useNavigate } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import { Card, CardContent, Button, TextField } from "@mui/material";
 
 function Register() {
   const [name, setName] = useState("");
@@ -29,53 +26,63 @@ function Register() {
 
   return (
     <>
-      <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-        <Card sx={{ maxWidth: 345, margin: "auto" }}>
+    <h1>Create a new account:</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
+        }}
+      >
+        <Card sx={{ width: 350, backgroundColor: "white" }}>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              <h3>Create a new account:</h3>
-            </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              <h2>Name:</h2>
-              <input
-                type="text"
+            <TextField
+              label="Név"
+              type="text"
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
-              />
-            </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              <h2>Email:</h2>
+              fullWidth
+              inputProps={{ min: 1, max: 5 }}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              label="Email"
+              type="text"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              fullWidth
+              inputProps={{ min: 1, max: 5 }}
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+
+            <div style={{ marginBottom: "16px"}}>
               <input
-                type="text"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
               />
-            </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              <h2>Password:</h2>
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <div>
-                <input
-                  type="checkbox"
-                  checked={showPassword}
-                  onChange={() => setShowPassword(!showPassword)}
-                />
-                <label>Show Password</label>
-              </div>
-              <br />
-            </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              <button onClick={onSubmit}>Registration</button>
-            </Typography>
+              <label style={{ marginLeft: "8px" }}>
+                Show Password
+              </label>
+            </div>
+
+            <Button variant="contained" fullWidth onClick={onSubmit}>
+              Küldés
+            </Button>
           </CardContent>
         </Card>
-      </Grid>
+      </div>
 
       <div
         style={{

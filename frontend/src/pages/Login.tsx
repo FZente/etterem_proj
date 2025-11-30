@@ -1,6 +1,7 @@
 import { useState } from "react";
 import apiClient from "../api/apiClient";
 import { useNavigate } from "react-router-dom";
+import { Card, CardContent, Button, TextField } from "@mui/material";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -29,30 +30,54 @@ function Login() {
   return (
     <>
       <h1>Login:</h1>
-      <h2>Email:</h2>
-      <input
-        type="text"
-        onChange={(e) => {
-          setEmail(e.target.value);
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
         }}
-      />
-      <h2>Password:</h2>
-      <input
-        type={showPassword ? "text" : "password"}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <div>
-        <input
-          type="checkbox"
-          checked={showPassword}
-          onChange={() => setShowPassword(!showPassword)}
-        />
-        <label>Show Password</label>
-      </div>
-      <br />
-      <button onClick={onSubmit}>Login</button>
+      >
+        <Card sx={{ width: 350, backgroundColor: "white" }}>
+          <CardContent>
+            <TextField
+              label="Email"
+              type="text"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              fullWidth
+              inputProps={{ min: 1, max: 5 }}
+              sx={{ mb: 2 }}
+            />
 
+            <TextField
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+
+            <div style={{ marginBottom: "16px"}}>
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              <label style={{ marginLeft: "8px" }}>
+                Show Password
+              </label>
+            </div>
+
+            <Button variant="contained" fullWidth onClick={onSubmit}>
+              Küldés
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+      
+      
       <div
         style={{
           display: "flex",
