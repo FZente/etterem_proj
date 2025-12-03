@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Restaurant } from "./type/Restaurant";
+import type { User } from "./type/User";
 import "./App.css";
 import apiClient from "./api/apiClient";
 import Card from "@mui/material/Card";
@@ -8,9 +9,11 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import Grid from "@mui/material/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Button } from "@mui/material";
 
 function App() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [user, setUser] = useState<User>();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,8 +35,43 @@ function App() {
   );
 });
 
+    useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+const deleteRestaurant = (id?: number) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Nincs bejelentkezve!");
+    return;
+  }
+
+  apiClient
+    .delete(`/restaurants/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(() => {
+      alert("Sikeres törlés!");
+      window.location.reload(); // vagy újra lekéred a listát
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("Sikertelen törlés!");
+    });
+};
+
   return (
     <>
+      {user?.role === "admin" && (
+        <button onClick={() => navigate("/new-restaurant")}>
+          + Új étterem
+        </button>
+      )}
       <Grid
         container
         spacing={3}
@@ -57,8 +95,25 @@ function App() {
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   {r?.average_rating.toFixed(1)} ⭐
                 </Typography>
+                
               </CardContent>
             </CardActionArea>
+                {user?.role === "admin" && (
+                <>
+                    <Button
+                      variant="outlined"
+                      onClick={() => navigate(`/edit-restaurant/${r.id}`)}
+                    >
+                      Szerkesztés
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      onClick={() => deleteRestaurant(r.id)}
+                    >
+                      Törlés
+                    </Button>
+                    </>
+                )}
           </Card>
         ))}
       </Grid>

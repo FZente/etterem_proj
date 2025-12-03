@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Restaurant } from "../type/Restaurant";
 import type { Review } from "../type/Review";
-import type { User } from "../type/User";
 import apiClient from "../api/apiClient";
 import { useNavigate, useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
@@ -13,7 +12,6 @@ import { Button } from "@mui/material";
 function RestaurantPage() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState<Restaurant>();
-  const [user, setUser] = useState<User>();
   const [reviews, setReviews] = useState<Review[]>([]);
   const navigate = useNavigate();
 
@@ -29,13 +27,6 @@ function RestaurantPage() {
       .catch((result) => console.error(result));
   }, [id]);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
   const handleButtonClick = () => {
     const token = localStorage.getItem("token");
 
@@ -49,46 +40,9 @@ function RestaurantPage() {
     console.log("Button működik, felhasználó bejelentkezett!");
   };
 
-  const deleteRestaurant = () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Nincs bejelentkezve!");
-    return;
-  }
-
-  apiClient
-    .delete(`/restaurants/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(() => {
-      alert("Sikeres törlés!");
-      navigate("/"); // vissza a listára
-    })
-    .catch((err) => {
-      console.error(err);
-      alert("Sikertelen törlés!");
-    });
-};
-
   return (
     <>
-      <h1>Restaurant</h1>
-      {user?.role === "admin" && (
-        <Button
-          variant="outlined"
-          onClick={() => navigate(`/edit-restaurant/${id}`)}
-        >
-          Szerkesztés
-        </Button>
-      )}
-      {user?.role === "admin" && (
-        <Button variant="outlined" onClick={deleteRestaurant}>
-          Törlés
-        </Button>
-      )}
-      <h2>{restaurant?.name}</h2>
+      <h1>{restaurant?.name}</h1>
       <h3>{restaurant?.description}</h3>
 
       <Button variant="outlined" onClick={handleButtonClick}>
@@ -97,8 +51,7 @@ function RestaurantPage() {
       <Grid
         container
         spacing={3}
-        sx={{ mt: 2 }}
-        size={{ xs: 12, sm: 6, md: 4 }}
+        sx={{ mt: 1 }}
       >
         {reviews.map((r) => (
           <Card>

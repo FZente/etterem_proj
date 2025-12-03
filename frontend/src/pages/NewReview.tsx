@@ -75,7 +75,8 @@ const NewReview = () => {
 
   return (
     <>
-      <h1>Új értékelés</h1>
+      <h1></h1>
+      <h2>Új értékelés</h2>
 
       <div
         style={{

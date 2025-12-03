@@ -60,8 +60,11 @@ export default function Navbar() {
                 placeholder="Search restaurants..."
                 value={search}
                 onChange={(e) => {
-                  setSearch(e.target.value);
-                  navigate(`/?search=${e.target.value}`);
+                  const value = e.target.value;
+                  setSearch(value);
+                  if (value.length >= 3) {
+                    navigate(`/?search=${value}`);
+                  }
                 }}
                 sx={{
                   backgroundColor: "white",

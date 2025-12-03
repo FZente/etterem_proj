@@ -42,7 +42,7 @@ const EditRestaurant = () => {
 
   return (
     <>
-    <h1>Étterem szerkesztés</h1>
+    <h1>{restaurant.name} szerkesztés</h1>
     <div
         style={{
           display: "flex",
