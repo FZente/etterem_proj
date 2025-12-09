@@ -3,11 +3,14 @@ import type { Restaurant } from "../type/Restaurant";
 import type { Review } from "../type/Review";
 import apiClient from "../api/apiClient";
 import { useNavigate, useParams } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Rating,
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+} from "@mui/material";
 
 function RestaurantPage() {
   const { id } = useParams();
@@ -48,11 +51,7 @@ function RestaurantPage() {
       <Button variant="outlined" onClick={handleButtonClick}>
         Write Review
       </Button>
-      <Grid
-        container
-        spacing={3}
-        sx={{ mt: 1 }}
-      >
+      <Grid container spacing={3} sx={{ mt: 1 }}>
         {reviews.map((r) => (
           <Card>
             <CardContent>
@@ -61,7 +60,7 @@ function RestaurantPage() {
                   ? new Date(r.created_at).toLocaleString("hu-HU")
                   : ""}
               </Typography>
-              <Typography variant="h6">{r.rating}</Typography>
+              <Rating name="read-only" value={r.rating} readOnly />
               <Typography>{r.comment}</Typography>
             </CardContent>
           </Card>

@@ -2,7 +2,14 @@ import { useState, useEffect } from "react";
 import type { Review } from "../type/Review";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
-import { TextField, Button, Card, CardContent } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  Rating,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 
 const NewReview = () => {
@@ -87,16 +94,13 @@ const NewReview = () => {
       >
         <Card sx={{ width: 350, backgroundColor: "white" }}>
           <CardContent>
-            <TextField
-              label="Rating (1-5)"
-              type="number"
+            <Typography component="legend">Rating</Typography>
+            <Rating
+              name="simple-controlled"
               value={review.rating}
               onChange={(e) =>
                 setReview({ ...review, rating: Number(e.target.value) })
               }
-              fullWidth
-              inputProps={{ min: 1, max: 5 }}
-              sx={{ mb: 2 }}
             />
 
             <TextField
